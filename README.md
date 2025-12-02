@@ -88,7 +88,7 @@ El proyecto incluye varios archivos de datos de ejemplo:
 
 **Daniel Gómez**  
 2º DAM - Acceso a Datos  
-Curso 2024/2025
+Curso 2025/2026
 
 ## 📄 Licencia
 
@@ -96,5 +96,5 @@ Este proyecto es de uso educativo y personal.
 
 ---
 
-_Actualizado: Diciembre 2024_
+_Actualizado: Diciembre 2025_
 
