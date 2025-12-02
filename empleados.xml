@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Empresa>
+    <Empleado dni="12345678A">
+        <nombre>Ana García</nombre>
+        <salario>30000</salario>
+    </Empleado>
+    <Empleado dni="98765432B">
+        <nombre>Luis Pérez</nombre>
+        <salario>45000</salario>
+    </Empleado>
+</Empresa>
+

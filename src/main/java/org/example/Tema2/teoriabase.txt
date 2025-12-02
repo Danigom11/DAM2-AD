@@ -1,0 +1,455 @@
+Qué es un fichero	Un conjunto de bits almacenados en un dispositivo. La ventaja es que los datos que guardamos permanecen en el dispositivo aún cuando apaguemos el ordenador, no son volátiles.
+Un fichero está formado por un conjunto de registros o líneas y cada registro por un conjunto de campos relacionados.
+Clases asociadas a operaciones de gestión de ficheros	java.io
+java.nio (más moderna)
+Clase File	Del paquete java.io
+File fichero = new File("fichero.txt");
+
+Métodos principales:
+String[] list()
+String getName()
+String getPath()
+boolean exists()
+boolean createNewFile()
+...
+Flujos o Streams. Paquete java.io	Abstracción de flujo (stream) para tratar la comunicación de información entre una fuente y un destino.
+Cualquier programa que tenga que obtener información de cualquier fuente necesita abrir un stream, o si necesita enviar información abrirá un stream y se escribirá la información en serie.
+Dos tipos de Stream o flujos	- Flujo de bytes (8 bits):
+Operaciones de entradas y salidas de bytes y su uso está orientado a la lectura / escritura de datos binarios. Descienden de InputStream y OutputStream con sus subclases.
+
+- Flujos de caracteres (16 bits):
+Operaciones de entradas y salidas de caracteres. Clases Reader y Writer. Es para manejar caracteres Unicode de 16 bits para internacionalizar.
+Flujos de bytes (Byte streams)	InputStream: para las entradas de distintas fuentes: un array de bytes, un String, un fichero, una conexión a internet...
+FileInputStream
+FilterInputStream -> DataInputStream, BufferedInputStream...
+...
+
+OutputStream: salidas a un array de bytes o a un fichero.
+FileOutputStream,
+FilterOutputStream -> DataOutputStream, BufferedOutputStream...
+Flujos de caracteres (Character streams)	Reader y Writer manejan caracteres Unicode.
+Reader:
+BufferedReader
+InputStreamReader -> FileReader
+StringReader
+...
+
+Writer:
+BufferedWriter
+OutputStreamWriter -> FileWriter
+StringWriter
+...
+Clases "puente" entre flujo de caracteres y de bytes	InputStreamReader: transforma un InputStream en un Reader
+OutputStreamWriter: transforma un OutputStream en un Writer
+Paquete java.nio.file	Mejora del sistema original de entrada / salida de Java.
+Ofrece mayor flexibilidad al trabajar con la lectura y escritura de datos, tanto en ficheros como en redes.
+- Interfaz java.nio.file.Path: para ubicar ficheros o directorios.
+
+- Clase java.nio.file.Files: métodos para operar con ficheros y directorios
+Excepción que lanzan la mayoría de estos métodos	IOException: se produce un error de E/S
+Formas de acceso a un fichero	- Acceso secuencial: Se lee y se escribe en orden. Si se quiere acceder a un dato o un registro que está hacia la mitad del fichero es necesario leer antes todos los anteriores. La escritura es a partir del último dato escrito. No es posible hacer inserciones entre los datos que ya hay escritos.
+Puede ser:
+· Binario
+Con las clases: FileInputStream y FileOutputStream
+· A caracteres
+Con las clases: FileReader y FileWriter
+
+- Acceso directo o aleatorio: permite acceder directamente a un dato o un registro sin necesidad de leer los anteriores y se puede acceder a la información en cualquier orden. Los datos están almacenados en registros de tamaño conocido, nos podemos mover de un registro a otro de forma aleatoria para leerlos o modificarlos.
+Con la clase RandomAccessFile
+Operaciones sobre ficheros independientemente de la forma de acceso	Crear, aperturar, cerrar, leer y escribir.
+Una vez abierto:
+Altas, bajas, modificaciones y consultas
+Operaciones sobre ficheros secuenciales	Los registros se insertan en orden cronológico, a continuación del último insertado. Si hay que añadir se añaden a partir del final del fichero.
+- Consultas: empezar desde el primer registro y continuar leyendo secuencialmente hasta localizar el registro buscado.
+- Altas: al final del fichero
+- Bajas: Leer todos los registros uno a uno y escribirlos en un fichero auxiliar menos el que se quiere dar de baja. Después borrar el fichero inicial y renombrar el auxiliar como el original.
+- Modificaciones: Localizar el registro a modificar, modificar y reescribir el fichero inicial en otro auxiliar con el registro modificado.
+Para que se usan los ficheros secuenciales y ventajas y desventajas	Para aplicaciones de proceso por lotes como el respaldo de datos o backup y son óptimos si se procesan todos los registros.
+
+Ventaja: rápida capacidad de acceso al siguiente registro y aprovechan mejor el espacio. También son sencillos de usar y aplicar.
+
+Desventaja: no se puede acceder a un registro determinado, hay que leer antes todos los anteriores. El proceso de actualización exige reescribirlos totalmente. Par aplicaciones interactivas que incluyen peticiones o actualizaciones de registros individuales tiene rendimiento pobre.
+Operaciones sobre ficheros aleatorios	Acceder a un registro: localizar la posición o dirección donde se encuentra.
+Manipulan direcciones relativas en vez de absolutas. Los registros se almacenan a partir de la posición 0.
+Es necesario aplicar una función de conversión que usualmente tiene que ver con el tamaño del registro y con el campo clave del mismo.
+TAMAÑODELREGISTRO * (X - 1)
+Puede ocurrir que devuelva una posición ocupada por otro registro y habrá que buscar otra posición libre o usar una zona de excedentes.
+
+- Consultas: saber la clave, aplicar la función de conversión para obtener la dirección y leer el registro. Si no está buscarlo en la zona de excedentes.
+
+- Altas: clave, función de conversión y escribirlo ahí. Si está ocupada a la zona de excedentes.
+
+- Bajas: clave, localizar, y se suele usar un campo a modo de switch con un 1 si existe o un 0 si queremos borrarlo
+
+- Modificaciones: clave, localizar y modificar reescribiendo los datos.
+Ficheros secuenciales: ventajas y desventajas	- Ventajas: rápido acceso a una posición determinada para leer o escribir un registro.
+- Inconveniente: establecer la relación entre la posición que ocupa el registro y su contenido. A veces al aplicar la función de conversión se obtienen posiciones ocupadas y hay que recurrir a la zona de excedentes. Otro inconveniente es que se puede desaprovechar parte del espacio destinado al fichero ya que se pueden producir huecos entre un registro y otro.
+Clases para la gestión de flujos de datos desde / hacia ficheros: ficheros de texto	FileWriter fic = new FileWriter(fichero, true) -> write para caracteres o Strings. True para que no borre todo al escribir.
+
+BufferedReader fichero = new BufferedReader (new FileReader(fichero)); -> readLine() para líneas completas
+while((linea = fichero.readLine()) != null)...
+
+BuffereWriter fichero = new BufferedWriter(new FileWriter(fichero)); -> write() una línea, newLine() para un salto de línea
+
+Con java.nio.file:
+Path ruta = Path.of("fichero.txt");
+Files.writeString(ruta, cadena, StandardOpenOption.CREATE);
+Files.writeString(ruta, cadena, StandardOpenOption.APPEND);
+Clases para la gestión de flujos de datos desde / hacia ficheros: ficheros de binarios	Almacenan secuencias de dígitos binarios que no son legibles por el usuario.
+FileInputStream in = new FileInputStream(new File("ffuente.txt"));
+FileOutputStream out = new FileOutputStream( new File("fdestino.txt"));
+int c;
+while ((c = in.read()) != -1) out.write(c);
+in.close();
+out.close();
+
+Para datos primitivos (int, boolean...)
+DataInputStream dataIS = new DataInputStream(new FileInputStream(new File("fichero.dat"); -> while(true), readUTF(), readInt()... EOFException
+dataIS.close();
+
+DataOutputStream dataOS = new DataOutputStream(new FileOutputStream(new File("fileout.dat"); -> writeUTF(String), writeInt(número)...
+dataOS.close();
+Serializar objetos con java.io	Permiten tomar cualquier objeto que implemente la interfaz serializable y convertirlo a una secuencia de bytes.
+Se usan:
+ObjectInputStream dataIS = new ObjectInputStream (new FileInputStream(new File("fichero.dat");
+while(true)
+Persona persona = (Persona) dataIS.readObject();... EOFException...
+
+ObjectOutputStream dataOS = new ObjectOutputStream(new FileOutputStream(new File("fichero.dat");
+dataOS.writeObject(persona); // el objeto que sea
+
+Problema con la cabecera:
+Crear clase que extiende de ObjectOutputStream y sobreescribir:
+protected void writeStreamHeader() throws IOException { vacío }
+Serializar objetos con java.nio	Path ruta = Path.of("Fichero.dat");
+ObjectOutputStream dataOS;
+if (Files.exists(ruta)){
+dataOS = new MiObjectOutputStream(Files.newOutputStream(ruta, StandardOpenOpcion.APPEND));
+} else {
+dataOS = new ObjectOutputStream(
+Files.newOutputStream(ruta, StandardOpenOption.CREATE
+}
+dataOS.writeObject(new Persona(...,...));
+dataOS.close();
+Ficheros de acceso aleatorio	// Escribir
+RandomAccessFile raf = new RandomAccessFile(new File("fichero.dat", "rw");
+static int longitudRegistro = lo que sea;
+long posicion = id[ i ] -1 * longitudRegistro;
+file.seek(posicion);
+file.writeInt(1);
+// Para un String de 10 caracteres:
+StringBuffer buffer = new StringBuffer(nombre);
+buffer.setLength(10);
+file.writeChars(buffer.toString());
+...
+file.close();
+
+// Leer
+RandomAccessFile raf = new RandomAccessFile(new File("fichero.dat", "r");
+... // variables a usar
+for (;;) {
+id = file.readInt();
+// Para un String de 10 caracteres
+char [ ] nombre = new char[10];
+char aux;
+for (int i = 0; i < nombre.lenght; i++) {
+aux = file.readChar();
+apellido[ i ] = aux;
+}
+String nombres = new String(nombre)
+...
+file.close();
+
+// Añadir registro al final
+long posicion = file.length();
+file.seek(posicion);
+
+// Modificar un registro
+Calcular la posición y sobreescribirlo
+
+// Borrar
+Calcular la posición y poner el campo clave en -1
+XML qué es	Es un metalenguaje para la definición de lenguajes de marcado. Permite jerarquizar y estructurar la información y describir los contenidos dentro del propio documento.
+Los ficheros XML son ficheros de texto escritos en lenguaje XML donde la información está organizada de forma secuencial y en orden jerárquico. < ... >
+Para que se pueden usar los archivos XML	Para proporcionar datos a una base de datos o para almacenar copias de partes del contenido de la base de datos. También para escribir ficheros de configuración de programas o en el protocolo SOAP para ejecutar comandos en servidores remotos.
+Cómo leer un fichero XML	Se usa un procesador de XML o parser. El procesador lee los documentos y proporciona acceso a su contenido y estructura.
+
+- DOM: Modelo de objetos de Documento
+Almacena toda la estructura en memoria en forma de árbol con nodos padre, hijo y finales. Una vez creado se recorren y analizan. Necesita más recursos de memoria y tiempo sobre si todo si los ficheros son grandes y complejos.
+
+- SAX: API Simple para XML.
+Lee el fichero de forma secuencial y produce una secuencia de eventos en función de los resultados. Cada evento invoca a un método definido por el programador. Prácticamente no consume memoria pero impide tener una visión global del documento por el que navegar.
+
+Son independientes del lenguaje de programación y existen versiones particulares para cada lenguaje.
+
+Para trabajar con Java surgió: JDOM y su evolución JDOM2.
+Hay que agregar las dependencias en pom.xml usando Maven.
+
+import org.jdom2.*;
+import java.io.*;
+Crear XML	Element root = new Element("personas");
+
+Element p1 = new Element("persona");
+p1.setAttribute("id", "1");
+p1.addContent(new Element("nombre").setText("Juan"));
+root.addContent(p1);
+
+Document document = new Document(root);
+
+XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+xmlOutputter.ouput(document, new FileWriter("personas.xml"));
+Mostrar XML sin escribirlo en fichero	String salida = xmlOutputter.outputString(document);
+System.out.println(salida);
+Leer XML	File file = new File("personas.xml");
+SAXBuilder saxBuilder = new SAXBuilder();
+Document document = saxBuilder.build(file);
+Element raiz = document.getRootElement();
+
+for(Element persona : raiz.getChildren("persona")) {
+String id = persona.getAttributeValue("id");
+String edad = persona.getChildText("edad");
+...
+Añadir a XML	File file = new File("personas.xml");
+SAXBuilder saxBuilder = new SAXBuilder();
+Document document saxBuilder.build(file);
+Element raiz = document.getRootElement();
+
+Element persona = new Element("persona");
+persona.setAttribute("id", "4");
+persona.addContent(new Element("nombre").setText("Pedro");
+
+raiz.addContent(persona);
+
+XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+xmlOutputter.output(document, new FileWriter(file));
+Eliminar de un XML	File file = new File("personas.xml");
+SAXBuilder saxBuilder = new SAXBuilder();
+Document document saxBuilder.buld(file);
+Element raiz = document.getRootElement();
+
+List<Element> personas = raiz.getChildren("persona");
+for (Element per : personas) {
+if (per.getAttributeValue("id").equals("1") {
+raiz.removeContent(per);
+break;
+}
+}
+
+XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+xmlOutputter.output(document, new FileWriter(file));
+Modificar en XML	Con persona.getChild("nombre").setText("Pepe");
+Como buscar en un XML usando XPath	import org.jdom2.*;
+import java.io.*;
+import java.util.*;
+...
+File file = new File("personas.xml");
+SAXBuilder saxBuilder = new SAXBuilder();
+Document document = saxBuilder.build(file);
+
+String consulta = "//personas/persona[nombre='Juan']";
+
+XPathFactory xPathFactory = XPathFactory.instance();
+XPathExpression<Element> expr = xPathFactory.compile(xonsulta, Filters.element());
+
+List<Element> results = expr.evaluate(document);
+
+for(Element ele : results) {
+... Mostrar lo siguiente:
+ele.getAttribute("id").getValue();
+ele.getChildText("nombre");
+...
+JSON qué es	Notación de objetos de JavaScript. Formato de texto ligero para intercambio de datos. Ampliamente utilizado por su simplicidad y legibilidad tanto para humanos como para máquinas. Independiente del lenguaje de programación y se usa para transmitir datos entre un cliente y un servidor en aplicaciones web. Muchas aplicaciones lo usan para almacenar configuraciones.
+Es comprensible para los humanos y fácil de procesar por máquinas.
+Estandarizado.
+Jerárquico.
+
+Se compone de Claves (keys) y valores (int, boolean, objetos, arrays, null...)
+Como acceder a JSON	Librería Jackson entre otras.
+Hay que añadir las dependencias.
+
+Y poner los imports:
+import com.fasterxml.jackson.databind.*;
+Leer un empleado en JSON	Tener el archivo JSON
+Hacer la clase POJO Empleado.java con constructores y get/set
+
+static File jsonFile = new File("unempleado.json");
+...
+ObjectMapper mapper = new ObjectMapper();
+// 2 métodos:
+// Mapeando a Map
+Map<String, Object> json = mapper.readValue(jsonFile, Map.class);
+System.out.println(json);
+
+// Mapeando a objeto Empleado
+Empleado empleado = mapper.readValue(jsonFile, Empleado.class);
+System.out.println(empleado);
+Leer lista de empleados en JSON	File jsonFile = new File("empleado.json");
+ObjectMapper mapper = new ObjectMapper();
+TypeReference<List<Empleado>> ref = new TypeReference<List<Empleado>>( ) { };
+
+List<Empleado> empleados = (List<Empleado>) mapper.readValue(jsonFile, ref)
+
+for (Empleado empleado : empleados) System.out.println(empleado);
+Escribir en un JSON	ObjectMapper mapper = new ObjectMapper();
+Empleado empleado = new Empleado(...,...,...,...);
+mapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, empleado);
+Modificar un empleado en JSON	ObjectMapper mapper = new ObjectMapper();
+File jsonFile = new File("empleados.json");
+List<Empleado> empleados = mapper.readValue(jsonFile, new TypeReference<List<Empleado>>( ) { };
+
+for (Empleado empleado : empleados) {
+if (empleado.getId() == 4) {
+empleado.setSalario(5000); // Se lo merece...
+}
+
+mapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, empleado);
+Añadir un nuevo empleado JSON	ObjectMapper mapper = new ObjectMapper();
+File jsonFile = new File("empleados.json");
+List<Empleado> empleados = mapper.readValue(jsonFile, new TypeReference<List<Empleado>>( ) { };
+
+Empleado nuevoEmpleado = new Empleado(..., ..., ...);
+empleados.add(nuevoEmpleado);
+
+mapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, empleado);
+Eliminar un empleado con ID 3 en JSON	ObjectMapper mapper = new ObjectMapper();
+File jsonFile = new File("empleados.json");
+List<Empleado> empleados = mapper.readValue(jsonFile, new TypeReference<List<Empleado>>( ) { };
+
+Iterator<Empleado> iterator = empleados.iterator();
+while (iterator.hasNext( ) ) {
+Empleado empleado = iterator.next();
+if (empleado.getId( ) == 3) iterator.remove( );
+}
+
+mapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, empleado);
+JsonNode	Se puede modificar sin mapear el JSON a clases POJO usando JsonNode con su método readTree(JSON) del ObjectMapper. Se convierte en un árbol de nodos JSON.
+Después usar las subclases:
+ObjectNode: si es un objeto { } con put() para añadir o modificar un campo.
+ArrayNode: si es un array [ ] con el método add( ) para agregar un nuevo objeto al array.
+
+import com.fasterxml.jackson.databind.*;
+Modificar y eliminar JSON con JsonNode en un ObjectNode	ObjectMapper mapper = new ObjectMapper();
+File jsonFile = new File("persona.json");
+JsonNode rootNode = mapper.readTree(jsonFile);
+
+if (rootNode.isObject()) {
+ObjectNode objectNode = (ObjectNode) rootNode;
+
+// Modificar
+objectNode.put("edad", 30);
+
+// Eliminar
+objectNode.remove("edad");
+
+...
+mapper.writer.WithDefaultPrettyPrinter().writeValue(jsonFile, objectNode);
+
+// Mostrarlo por consola
+System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode));
+Modificar, agregar y obtener en JSON con JsonNode en un ArrayNode	... // igual que antes
+if (rootNode.isArray()){
+ArrayNode arrayNode = (ArrayNode) rootNode;
+for (JsonNode node : arrayNode) {
+if (node.get("id").asInt( ) == 3) {
+ObjectNode empleado = (Objectnode) node;
+empleado.put("ciudad", "Guadalajara");
+
+// se puede agregar un dato también con put
+
+// Obtener
+int id = node.get("id").asInt();
+String nombre = node.get("nombre").asText();
+...
+
+... // Guardar los cambios en el fichero
+Eliminar y modificar en JSON con JsonNode e Iterator	ObjectMapper mapper = new ObjectMapper();
+File jsonFile = new File("empleados.json");
+JsonNode rootNode = mapper.readTree(jsonFile);
+
+Iterator<JsonNode> iterator = rootNode.elements();
+
+while (iterator.hasNext()) {
+JsonNode empleado = iterator.next();
+
+// Modificar
+if (empleado.get("id").asInt( ) == 4) {
+((ObjectNode) empleado).put("salario", 5000);
+}
+
+// Eliminar
+if (empleado.get("id").asInt() == 3) {
+iterator.remove();
+}
+
+}
+mapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
+Convertir de XML a JSON	1. Crear mapper de xml
+XmlMapper xmlMapper...
+File...
+
+2. Convertir el XML a Map
+Map<String, Object> map = xmlMapper.readValue(xmlFile, Map.class);
+
+3. Convertir el Map a JSON
+ObjectMapper objectMapper = new ObjectMapper();
+
+4. Escribir los datos en un fichero JSON
+objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, map);
+Convertir JSON a XML	1. File
+File jsonFile = new File ("libros.json");
+2. Crear mapeador de objetos
+ObjectMapper mapper = new ObjectMapper();
+3. Crear el JsonNode
+JsonNode jsonNode = mapper.readTree(jsonFile);
+4. El mapeador de XML
+XmlMapper xmlMapper = new XmlMapper();
+5. Convertir JsonNode a XML
+String xml = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsSTring(jsonNode);
+6. Almacenar en fichero XML
+File xmlFile = new File("librosnuevo.xml");
+xmlMapper.writerWithDefaultPrettyPrinter( ).writeValue(xmlFile, jsonNode);
+Anotaciones para JSON	En la declaración de la clase:
+@JsonPropertyOrder({"campo1", "campo2"})
+
+En los atributos de la clase:
+@JsonProperty("nombre")
+@JsonIgnore
+@JsonInclude(JsonInclude.NON_EMPTY)
+Anotaciones para XML	En la declaración de la clase:
+@JacksonXmlRootElement(localname="raizXML")
+
+En los atributos de la clase:
+@JacksonXmlProperty(localName="nombre")
+@JacksonXmlElementWrapper(localName="nombre")
+@JacksonXmlElementWrapper(useWrapping=false)
+Qué es CSV y donde se usa	Comma-Separated Values son ficheros de texto donde los valores están separados por comas formando una especie de tabla en filas y columnas.
+Se usan mucho en entornos donde se necesita intercambiar datos de manera sencilla, como bases de datos, hojas de cálculo y aplicaciones web.
+Como serializar y deserializar CSV a objetos Java	Con la librería OpenCSV.
+Añadir dependencias a pom.xml
+Importar:
+import com.opencsv.bean.*;
+Serializar CSV (de objeto Java a CSV)	- Una persona:
+Persona persona = new Persona(..., ..., ...);
+FileWriter fw = new FileWriter("persona.csv");
+StatefulBeanToCsv<Persona> beanToCsv = new StatefulBeanToCsvBuilder<Persona> (fw).build();
+beanToCsv.write(persona);
+fw.close();
+
+- Para varias personas:
+List<Persona> personas = Arrays.asList(
+new Persona("Ana", 25),
+...,
+...)
+beanToCsv.write(personas);
+...
+Anotaciones CSV	En los atributos de la clase:
+@CsvBindByName(column = "Nombre de la persona")
+private String nombre;
+...
+Deserializar de CSV (CSV a objeto Java)	BufferedReader br = new BufferedReader(new FileReader("personas.csv"));
+CsvToBean<Persona> csvToBean = new CsvToBeanBuilder<Persona>(br)
+.withType(Persona.class)
+.withIgnoreLeadingWhiteSpace(true)
+.build();
+List<Persona> personas = csvToBean.parse();
+for (Persona p : personas) System.out.println(p);

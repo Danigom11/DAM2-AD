@@ -1,0 +1,10 @@
+{
+  "nombre" : "Ana",
+  "apellidos" : "Gómez",
+  "email": "ana@example.com",
+  "lenguajes" : [ "Java", "Python"],
+  "direccion" : {
+    "calle" : "C/ Río",
+    "ciudad" : "Sevilla"
+  }
+}

@@ -1,0 +1,14 @@
+<catalogo>
+    <libro id="L1">
+        <titulo>Programación Java</titulo>
+        <autor>María Pérez</autor>
+        <precio>39.5</precio>
+        <stock>12</stock>
+    </libro>
+    <libro id="L2">
+        <titulo>Bases de datos</titulo>
+        <autor>Carlos Ruiz</autor>
+        <precio>45.0</precio>
+        <stock>5</stock>
+    </libro>
+</catalogo>

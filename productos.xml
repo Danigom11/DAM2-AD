@@ -1,0 +1,12 @@
+<ObjectNode>
+  <producto>
+    <codigo>100</codigo>
+    <descripcion>Ratón Óptico</descripcion>
+    <precio>25.5</precio>
+  </producto>
+  <producto>
+    <codigo>101</codigo>
+    <descripcion>Alfombrilla</descripcion>
+    <precio>5.0</precio>
+  </producto>
+</ObjectNode>

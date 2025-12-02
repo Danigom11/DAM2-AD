@@ -1,0 +1,14 @@
+{
+  "producto": [
+    {
+      "codigo": 100,
+      "descripcion": "Ratón Óptico",
+      "precio": 25.5
+    },
+    {
+      "codigo": 101,
+      "descripcion": "Alfombrilla",
+      "precio": 5.0
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "nombre" : "Ana",
+  "apellidos" : "Gómez",
+  "lenguajes" : [ "Java", "Python", "C" ],
+  "direccion" : {
+    "calle" : "Avenida del Río Henares",
+    "ciudad" : "Sevilla"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "libro" : [ {
+    "id" : "L1",
+    "titulo" : "Programación Java",
+    "autor" : "María Pérez",
+    "precio" : "39.5",
+    "stock" : "12"
+  }, {
+    "id" : "L2",
+    "titulo" : "Bases de datos",
+    "autor" : "Carlos Ruiz",
+    "precio" : "45.0",
+    "stock" : "5"
+  } ]
+}
