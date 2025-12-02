@@ -15,8 +15,8 @@ import java.util.List;
 
 public class ModificarXml {
     public static void main(String[] args) {
-        File file = new File("empleados.xml");
-        File fileF = new File("empleados_final.xml");
+        File file = new File("src/main/java/org/example/Tema2/SimulacroExamenInvertido/empleados.xml");
+        File fileF = new File("src/main/java/org/example/Tema2/SimulacroExamenInvertido/empleados_final.xml");
 
         try {
             // 1. Lectura del fichero XML
