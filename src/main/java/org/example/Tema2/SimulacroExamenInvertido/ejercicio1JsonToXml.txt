@@ -1,0 +1,36 @@
+SIMULACRO DE EXAMEN INVERTIDO – ACCESO A DATOS
+
+1. Ejercicio de Conversión: JSON a XML (Jackson y XmlMapper)
+
+Se dispone del siguiente contenido inicial en el fichero productos.json, que representa una lista de productos:
+
+{
+  "producto": [
+    {
+      "codigo": 100,
+      "descripcion": "Ratón Óptico",
+      "precio": 25.5
+    },
+    {
+      "codigo": 101,
+      "descripcion": "Alfombrilla",
+      "precio": 5.0
+    }
+  ]
+}
+
+Escribe una clase Java JsonToXml.java que, utilizando la librería Jackson (ObjectMapper y XmlMapper):
+
+1. Lectura y Conversión:
+   - Lee el fichero productos.json desde la raíz del proyecto
+   - Conviértelo a un JsonNode utilizando ObjectMapper
+
+2. Conversión a XML
+
+3. Guardado y Visualización:
+   - Muestra la cadena XML resultante por consola con indentación
+   - Escribe el XML en un nuevo fichero llamado productos.xml
+   - Muestra por consola cada producto con su descripción y precio
+
+4. Manejo de excepciones:
+   - Captura y muestra posibles IOException durante la lectura/escritura

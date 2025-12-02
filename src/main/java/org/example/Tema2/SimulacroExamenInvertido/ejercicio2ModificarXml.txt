@@ -1,0 +1,43 @@
+SIMULACRO DE EXAMEN INVERTIDO – ACCESO A DATOS
+
+2. Ejercicio de Manipulación XML: Gestión de Empleados (JDOM2)
+
+Se dispone del siguiente contenido inicial en el fichero empleados.xml:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Empresa>
+    <Empleado dni="12345678A">
+        <nombre>Ana García</nombre>
+        <salario>30000</salario>
+    </Empleado>
+    <Empleado dni="98765432B">
+        <nombre>Luis Pérez</nombre>
+        <salario>45000</salario>
+    </Empleado>
+</Empresa>
+
+Escribe una clase Java ModificarXml.java que, utilizando la librería JDOM2:
+
+1. Lectura del XML
+
+2. Modificación de datos existentes:
+   - Localiza el <Empleado> con dni="12345678A"
+   - Cambia su elemento <salario> a 32000
+
+3. Adición de nuevo empleado:
+   - Crea un nuevo elemento <Empleado> con dni="55555555X"
+   - Con nombre = "Marta Ruiz"
+   - Y salario = 50000
+
+4. Eliminación de empleado:
+   - Elimina completamente el empleado con dni="98765432B"
+
+5. Guardado del documento modificado:
+   - Guarda el documento XML resultante en empleados_final.xml
+   - Asegura que tenga indentación
+   - Muestra el XML resultante por consola con formato
+
+6. Manejo de excepciones:
+   - Captura JDOMException para errores de parsing XML
+   - Captura IOException para errores de entrada/salida
+
