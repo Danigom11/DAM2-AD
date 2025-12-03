@@ -53,8 +53,7 @@ public class ModificarXml {
             }
 
             // 5. Guardado: Escribir el documento modificado con indentación
-            XMLOutputter xmlOutputter = new XMLOutputter();
-            xmlOutputter.setFormat(Format.getPrettyFormat());
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             xmlOutputter.output(document, new FileOutputStream(fileF));
             System.out.println(xmlOutputter.outputString(document));
 
