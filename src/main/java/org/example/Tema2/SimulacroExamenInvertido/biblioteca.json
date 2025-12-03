@@ -1,0 +1,80 @@
+{
+  "biblioteca": [
+    {
+      "categoria": "Ficción",
+      "libros": [
+        {
+          "id": 1,
+          "titulo": "El Quijote",
+          "autor": "Miguel de Cervantes",
+          "editorial": "Francisco de Robles",
+          "anio": 1605,
+          "precio": {
+            "valor": 20.5,
+            "moneda": "EUR"
+          },
+          "disponibilidad": "Disponible"
+        },
+        {
+          "id": 2,
+          "titulo": "Cien Años de Soledad",
+          "autor": "Gabriel García Márquez",
+          "editorial": "Harper & Row",
+          "anio": 1967,
+          "precio": {
+            "valor": 25.0,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Prestado"
+        }
+      ]
+    },
+    {
+      "categoria": "No Ficción",
+      "libros": [
+        {
+          "id": 3,
+          "titulo": "Sapiens: De animales a dioses",
+          "autor": "Yuval Noah Harari",
+          "editorial": "Harper",
+          "anio": 2011,
+          "precio": {
+            "valor": 30.0,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Disponible"
+        },
+        {
+          "id": 4,
+          "titulo": "Educated",
+          "autor": "Tara Westover",
+          "editorial": "Random House",
+          "anio": 2018,
+          "precio": {
+            "valor": 22.5,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Disponible"
+        }
+      ]
+    },
+    {
+      "categoria": "Ciencia Ficción",
+      "libros": [
+        {
+          "id": 5,
+          "titulo": "Dune",
+          "autor": "Frank Herbert",
+          "editorial": "Ace Books",
+          "anio": 1965,
+          "precio": {
+            "valor": 19.99,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Prestado"
+        }
+      ]
+    }
+  ]
+}
+
