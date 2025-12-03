@@ -1,137 +1,136 @@
 SIMULACRO DE EXAMEN INVERTIDO – ACCESO A DATOS
-</dependency>
-    <version>2.15.2</version>
-    <artifactId>jackson-databind</artifactId>
-    <groupId>com.fasterxml.jackson.core</groupId>
-<dependency>
-Para Jackson:
-
-</dependency>
-    <version>2.10.1</version>
-    <artifactId>gson</artifactId>
-    <groupId>com.google.code.gson</groupId>
-<dependency>
-Para Gson:
-
-DEPENDENCIAS MAVEN NECESARIAS:
-
-   - Captura NullPointerException para datos no encontrados
-   - Captura IOException para errores de entrada/salida
-   - Captura JsonParseException para errores de parsing JSON
-6. Manejo de excepciones:
-
-   - Muestra el JSON resultante por consola con formato
-   - Asegura que tenga formato legible (pretty print)
-   - Guarda el JSON resultante en biblioteca_final.json
-5. Guardado del documento modificado:
-
-   - Si la categoría queda sin libros, eliminar también la categoría
-   - Elimina completamente el libro con id=5 ("Dune")
-4. Eliminación de libro:
-
-   - disponibilidad = "Disponible"
-   - precio: valor = 18.5, moneda = "EUR"
-   - anio = 1949
-   - editorial = "Secker & Warburg"
-   - autor = "George Orwell"
-   - titulo = "1984"
-   - Con id = 6
-   - Crea un nuevo libro en la categoría "Ficción"
-3. Adición de nuevo libro:
-
-   - Actualiza su precio a 28.0
-   - Cambia su disponibilidad de "Prestado" a "Disponible"
-   - Localiza el libro con id=2 ("Cien Años de Soledad")
-2. Modificación de datos existentes:
-
-   - Parsea el contenido a objetos Java
-   - Lee el fichero biblioteca.json
-1. Lectura del JSON
-
-Escribe una clase Java ModificarJson.java que, utilizando la librería Gson o Jackson:
-
-}
-  ]
-    }
-      ]
-        }
-          "disponibilidad": "Prestado"
-          },
-            "moneda": "USD"
-            "valor": 19.99,
-          "precio": {
-          "anio": 1965,
-          "editorial": "Ace Books",
-          "autor": "Frank Herbert",
-          "titulo": "Dune",
-          "id": 5,
-        {
-      "libros": [
-      "categoria": "Ciencia Ficción",
-    {
-    },
-      ]
-        }
-          "disponibilidad": "Disponible"
-          },
-            "moneda": "USD"
-            "valor": 22.5,
-          "precio": {
-          "anio": 2018,
-          "editorial": "Random House",
-          "autor": "Tara Westover",
-          "titulo": "Educated",
-          "id": 4,
-        {
-        },
-          "disponibilidad": "Disponible"
-          },
-            "moneda": "USD"
-            "valor": 30.0,
-          "precio": {
-          "anio": 2011,
-          "editorial": "Harper",
-          "autor": "Yuval Noah Harari",
-          "titulo": "Sapiens: De animales a dioses",
-          "id": 3,
-        {
-      "libros": [
-      "categoria": "No Ficción",
-    {
-    },
-      ]
-        }
-          "disponibilidad": "Prestado"
-          },
-            "moneda": "USD"
-            "valor": 25.0,
-          "precio": {
-          "anio": 1967,
-          "editorial": "Harper & Row",
-          "autor": "Gabriel García Márquez",
-          "titulo": "Cien Años de Soledad",
-          "id": 2,
-        {
-        },
-          "disponibilidad": "Disponible"
-          },
-            "moneda": "EUR"
-            "valor": 20.5,
-          "precio": {
-          "anio": 1605,
-          "editorial": "Francisco de Robles",
-          "autor": "Miguel de Cervantes",
-          "titulo": "El Quijote",
-          "id": 1,
-        {
-      "libros": [
-      "categoria": "Ficción",
-    {
-  "biblioteca": [
-{
-
-Se dispone del siguiente contenido inicial en el fichero biblioteca.json:
 
 3. Ejercicio de Manipulación JSON: Gestión de Biblioteca
 
+Se dispone del siguiente contenido inicial en el fichero biblioteca.json:
 
+{
+  "biblioteca": [
+    {
+      "categoria": "Ficción",
+      "libros": [
+        {
+          "id": 1,
+          "titulo": "El Quijote",
+          "autor": "Miguel de Cervantes",
+          "editorial": "Francisco de Robles",
+          "anio": 1605,
+          "precio": {
+            "valor": 20.5,
+            "moneda": "EUR"
+          },
+          "disponibilidad": "Disponible"
+        },
+        {
+          "id": 2,
+          "titulo": "Cien Años de Soledad",
+          "autor": "Gabriel García Márquez",
+          "editorial": "Harper & Row",
+          "anio": 1967,
+          "precio": {
+            "valor": 25.0,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Prestado"
+        }
+      ]
+    },
+    {
+      "categoria": "No Ficción",
+      "libros": [
+        {
+          "id": 3,
+          "titulo": "Sapiens: De animales a dioses",
+          "autor": "Yuval Noah Harari",
+          "editorial": "Harper",
+          "anio": 2011,
+          "precio": {
+            "valor": 30.0,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Disponible"
+        },
+        {
+          "id": 4,
+          "titulo": "Educated",
+          "autor": "Tara Westover",
+          "editorial": "Random House",
+          "anio": 2018,
+          "precio": {
+            "valor": 22.5,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Disponible"
+        }
+      ]
+    },
+    {
+      "categoria": "Ciencia Ficción",
+      "libros": [
+        {
+          "id": 5,
+          "titulo": "Dune",
+          "autor": "Frank Herbert",
+          "editorial": "Ace Books",
+          "anio": 1965,
+          "precio": {
+            "valor": 19.99,
+            "moneda": "USD"
+          },
+          "disponibilidad": "Prestado"
+        }
+      ]
+    }
+  ]
+}
+
+Escribe una clase Java ModificarJsonBiblioteca.java que, utilizando la librería Gson o Jackson:
+
+1. Lectura del JSON
+   - Lee el fichero biblioteca.json
+   - Parsea el contenido a objetos Java
+
+2. Modificación de datos existentes:
+   - Localiza el libro con id=2 ("Cien Años de Soledad")
+   - Cambia su disponibilidad de "Prestado" a "Disponible"
+   - Actualiza su precio a 28.0
+
+3. Adición de nuevo libro:
+   - Crea un nuevo libro en la categoría "Ficción"
+   - Con id = 6
+   - titulo = "1984"
+   - autor = "George Orwell"
+   - editorial = "Secker & Warburg"
+   - anio = 1949
+   - precio: valor = 18.5, moneda = "EUR"
+   - disponibilidad = "Disponible"
+
+4. Eliminación de libro:
+   - Elimina completamente el libro con id=5 ("Dune")
+   - Si la categoría queda sin libros, eliminar también la categoría
+
+5. Guardado del documento modificado:
+   - Guarda el JSON resultante en biblioteca_final.json
+   - Asegura que tenga formato legible (pretty print)
+   - Muestra el JSON resultante por consola con formato
+
+6. Manejo de excepciones:
+   - Captura JsonParseException para errores de parsing JSON
+   - Captura IOException para errores de entrada/salida
+   - Captura NullPointerException para datos no encontrados
+
+DEPENDENCIAS MAVEN NECESARIAS:
+
+Para Gson:
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+</dependency>
+
+Para Jackson:
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.15.2</version>
+</dependency>

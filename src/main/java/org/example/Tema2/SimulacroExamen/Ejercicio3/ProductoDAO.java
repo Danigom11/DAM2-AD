@@ -62,7 +62,6 @@ public class ProductoDAO {
                     int id = rs.getInt("id");
                     String nombre = rs.getString("nombre");
                     int stock = rs.getInt("stock");
-
                     System.out.printf("%d\t%-15s\t%d%n", id, nombre, stock);
                 }
             }
