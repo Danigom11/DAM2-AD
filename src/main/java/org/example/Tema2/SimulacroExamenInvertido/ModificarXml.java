@@ -15,10 +15,10 @@ import java.util.List;
 
 public class ModificarXml {
     public static void main(String[] args) {
-        File file = new File("src/main/java/org/example/Tema2/SimulacroExamenInvertido/empleados.xml");
-        File fileF = new File("src/main/java/org/example/Tema2/SimulacroExamenInvertido/empleados_final.xml");
-
         try {
+            File file = new File("src/main/java/org/example/Tema2/SimulacroExamenInvertido/empleados.xml");
+            File fileF = new File("src/main/java/org/example/Tema2/SimulacroExamenInvertido/empleados_final.xml");
+
             // 1. Lectura del fichero XML
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(file);
@@ -55,6 +55,7 @@ public class ModificarXml {
             // 5. Guardado: Escribir el documento modificado con indentación
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             xmlOutputter.output(document, new FileOutputStream(fileF));
+            // Mostrar por consola
             System.out.println(xmlOutputter.outputString(document));
 
         } catch (JDOMException | IOException e) {
